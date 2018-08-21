@@ -5,8 +5,25 @@ class Pixee::FuncsTest < Minitest::Test
     refute_nil ::Pixee::Funcs::VERSION
   end
 
-  # Will test stuff later
-  # def test_it_does_something_useful
-  #   assert false
-  # end
+  describe 'first_truthy' do
+    it 'Should return the first truthy item' do
+      truthy = Pixee::Funcs.first_truthy([
+                                           nil,
+                                           false,
+                                           'potato'
+                                         ])
+      assert_equal 'potato', truthy, 'Expected potato to be returned as the first truthy value'
+    end
+
+    it 'should return nil if no truthy items found' do
+      truthy = Pixee::Funcs.first_truthy([nil, nil, nil])
+      assert_nil truthy, 'Expected nil to be returned'
+    end
+
+    it 'should raise if the argument does not respond to each' do
+      assert_raises ArgumentError do
+        Pixee::Funcs.first_truthy(nil)
+      end
+    end
+  end
 end
